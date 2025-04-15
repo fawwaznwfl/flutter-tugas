@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:travel_app/core/routing/app_route.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplaschScreen extends StatefulWidget {
   const SplaschScreen({super.key});
@@ -12,9 +13,26 @@ class SplaschScreen extends StatefulWidget {
 }
 
 class _SplaschScreenState extends State<SplaschScreen> {
-  @override
+bool intro = false;
+String login = "";
+
+
+  cekData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+    if (prefs.getBool('isIntro') != null) {
+        intro = prefs.getBool('isIntro')!;
+        if (prefs.getString('isLogin') != null)  {
+          login = prefs.getString('isLogin')!;
+        }
+    }
+    });
+} 
+
   void initState() {
-    Future.delayed(Duration(seconds: 3), () => context.goNamed(Routes.Login));
+    print(intro);
+    cekData();
+    Future.delayed(Duration(seconds: 3), () => !intro ? context.goNamed(Routes.Intro) : login == "" ? context.goNamed(Routes.Login) : context.goNamed(Routes.home));
     super.initState();
   }
 

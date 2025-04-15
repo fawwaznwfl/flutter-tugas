@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:go_router/go_router.dart';
+import 'package:travel_app/core/model/model.dart';
+import 'package:travel_app/presentation/page/detail.dart';
 import 'package:travel_app/presentation/page/forgot1.dart';
 import 'package:travel_app/presentation/page/forgot2.dart';
 import 'package:travel_app/presentation/page/forgot3.dart';
@@ -14,6 +16,8 @@ import 'package:travel_app/presentation/page/intro.dart';
 import 'package:travel_app/presentation/page/login.dart';
 import 'package:travel_app/presentation/page/otp.dart';
 import 'package:travel_app/presentation/page/regis.dart';
+import 'package:travel_app/presentation/page/search.dart';
+
 import 'package:travel_app/presentation/page/splasch_screen.dart';
 
 part 'route_name.dart';
@@ -84,6 +88,24 @@ final appRoute = GoRouter(routes: [
     path: '/forgot7',
     name: Routes.Forgot7,
     builder: (context, state) => SuccessScreen(),
-  )
+  ),
+  GoRoute(path: '/detail',
+    name: Routes.detail,
+    builder: (context, state) {
+      final _data = state.extra as DetailWisata;
+      return DetailPage(data: _data);
+    },
+    ),
+   GoRoute(
+    path: '/search',
+    name: Routes.search,
+    builder: (context, state) {
+      final extra = state.extra as Map<String, dynamic>? ?? {};
+      final String searchQuery = extra['searchQuery'] as String? ?? "";
+      final int categoryID = extra['categoryID'] as int? ?? 0;
+      final List<Categories> categoryName = extra['categoryName'] as List<Categories>? ?? [];
+      return SearchScreen(categoryID: categoryID, searchQuery: searchQuery, dataCategory: categoryName);
+    },
+  ),
 
 ]);

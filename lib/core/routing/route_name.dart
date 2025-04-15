@@ -15,4 +15,6 @@ class Routes {
   static const Forgot5 = "/forgot5";
   static const OtpScreen = "/otp";
   static const Forgot7 = "/forgot7";
+  static const detail = "/detail";
+  static const search = "/search";
 }

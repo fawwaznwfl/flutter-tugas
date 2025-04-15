@@ -7,6 +7,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:travel_app/Core/routing/app_route.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class prossesAuth {
   var url = dotenv.env['baseUrl'];
@@ -84,6 +85,8 @@ Future verifyOTP(BuildContext context, String email, String otp) async {
           'password': password,
         }));
     if (response.statusCode == 200) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('isLogin', response.body);
      return context.goNamed(Routes.home);
     } else {
        return AlertDialog(
@@ -93,7 +96,7 @@ Future verifyOTP(BuildContext context, String email, String otp) async {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text("OK"),
+            child: Text("lol"),
           ),
         ],
       );
